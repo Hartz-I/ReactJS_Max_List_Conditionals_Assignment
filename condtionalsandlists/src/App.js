@@ -8,6 +8,7 @@ class App extends Component {
     inputText: null,
     outputText: "The length of text is 0",
     outputLength: null,
+    letters: [],
   };
 
   textSizeHandler = (event) => {
@@ -17,12 +18,23 @@ class App extends Component {
       outputLength: event.target.value.length,
     });
   };
+
+  textDeleteHandler = (index) => {
+    const letters = [...this.state.letters];
+
+    letters.splice(index, 1);
+
+    this.state.letters = letters;
+  };
+
   render() {
     const letters = [];
 
     for (let i = 0; i < this.state.outputLength; i++) {
       letters.push(this.state.inputText[i]);
     }
+
+    this.state.letters = letters;
 
     return (
       <div className="App">
@@ -32,8 +44,16 @@ class App extends Component {
 
         <ValidationComponent length={this.state.outputLength} />
 
-        {letters.map((letter, index) => {
-          return <CharComponent letter={letter} key={index} />;
+        {this.state.letters.map((letter, index) => {
+          return (
+            <CharComponent
+              letter={letter}
+              key={index}
+              clicked={(index) => {
+                this.textDeleteHandler(index);
+              }}
+            />
+          );
         })}
       </div>
     );
