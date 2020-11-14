@@ -28,13 +28,9 @@ class App extends Component {
   };
 
   render() {
-    const letters = [];
-
     for (let i = 0; i < this.state.outputLength; i++) {
-      letters.push(this.state.inputText[i]);
+      this.state.letters.push(this.state.inputText[i]);
     }
-
-    this.state.letters = letters;
 
     return (
       <div className="App">
